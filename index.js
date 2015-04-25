@@ -3,6 +3,7 @@ var trim = require('./lib/trim');
 
 /**
  * PullWord Api constructor
+ *
  * @param {object}  options
  * @param {string}  options.url - pullword.com api url
  * @param {number}  options.threshold - 阀值(0-1)
@@ -23,6 +24,7 @@ function PullWordApi(options) {
 
 /**
  * Init Settings
+ *
  * @param options
  * @api private
  */
@@ -50,7 +52,7 @@ PullWordApi.prototype.splitText = function (source, callback) {
         form: {
             source: source,
             param1: self.settings.threshold,
-            param2: self.settings.debug
+            param2: self.settings.debug? 1: 0 // support true/false
         }
     };
 
@@ -58,9 +60,12 @@ PullWordApi.prototype.splitText = function (source, callback) {
 
         if (!err && response.statusCode == 200) {
 
+            result = trim(result);
+
             if ((!self.settings.debug) && self.settings.array) {
-                result = trim(result).split('\r\n');
+                result = result.split('\r\n');
             }
+
         }
 
         callback(err, result);
@@ -71,4 +76,3 @@ PullWordApi.prototype.splitText = function (source, callback) {
  * Expose `PullWordApi`
  */
 module.exports = PullWordApi;
-

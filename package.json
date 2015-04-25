@@ -6,9 +6,13 @@
   },
   "description": "中文在线分词, 调用pullword.com的api",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "jslint": "^0.9.0-pre006",
+    "mocha": "^2.2.4",
+    "should": "^6.0.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 150000 test.js"
   },
   "keywords": [
     "pullword",
@@ -16,5 +20,5 @@
     "分词"
   ],
   "author": "steamwheedle",
-  "license": "ISC"
+  "license": "MIT"
 }
