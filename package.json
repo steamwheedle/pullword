@@ -4,7 +4,7 @@
   "dependencies": {
     "request": "^2.55.0"
   },
-  "description": "中文在线分词, 调用pullword.com接口",
+  "description": "中文在线分词, 调用pullword.com的api",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
