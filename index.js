@@ -1,42 +1,64 @@
 var request = require('request');
 var trim = require('./lib/trim');
 
-function PullWord(opt) {
-    this.setting = {
+/**
+ * PullWord Api constructor
+ * @param {object}  options
+ * @param {string}  options.url - pullword.com api url
+ * @param {number}  options.threshold - 阀值(0-1)
+ * @param {boolean} options.debug - 调式模式, 开启后会忽略array的值, 返回原始字符串
+ * @param {boolean} options.array - 返回数组
+ * @api public
+ */
+function PullWordApi(options) {
+    this.settings = {
         url: 'http://api.pullword.com/post.php', /* api url */
         threshold: 0.5, /* 阀值 */
         debug: 0, /* 调式模式, 忽略array的值, 返回原始字符串 */
         array: 1 /* 返回数组 */
     };
 
-    this.init(opt);
+    this.init(options);
 };
 
-PullWord.prototype.init = function (opt) {
-    for (var attr in opt) {
-        this.setting[attr] = opt[attr];
+/**
+ * Init Settings
+ * @param options
+ * @api private
+ */
+PullWordApi.prototype.init = function (options) {
+    for (var attr in options) {
+        this.settings[attr] = options[attr];
     }
 };
 
-PullWord.prototype.splitText = function (source, callback) {
+/**
+ * Send api request to split text
+ *
+ * @param {string} source
+ * @param {function} callback
+ * @api public
+ */
+PullWordApi.prototype.splitText = function (source, callback) {
 
     var self = this;
 
-    if (!source) return  self.setting.debug || !self.setting.array? '' : [];
+    if (!source) return  self.settings.debug || !self.settings.array? '' : [];
 
     var options = {
-        url: self.setting.url,
+        url: self.settings.url,
         form: {
             source: source,
-            param1: self.setting.threshold,
-            param2: self.setting.debug
+            param1: self.settings.threshold,
+            param2: self.settings.debug
         }
     };
 
     request.post(options, function (err, response, result) {
+
         if (!err && response.statusCode == 200) {
 
-            if ((!self.setting.debug) && self.setting.array) {
+            if ((!self.settings.debug) && self.settings.array) {
                 result = trim(result).split('\r\n');
             }
         }
@@ -45,5 +67,8 @@ PullWord.prototype.splitText = function (source, callback) {
     });
 };
 
-module.exports = PullWord;
+/**
+ * Expose `PullWordApi`
+ */
+module.exports = PullWordApi;
 
