@@ -5,10 +5,10 @@ var extend = require('util')._extend;
 /**
  * PullWord constructor
  *
- * @param {object}  options - 默认配置项
+ * @param {object}  [options] - 默认配置项
  * @param {string}  options.url - pullword.com 接口地址
  * @param {number}  options.threshold - 阀值(0-1)
- * @param {boolean} options.debug - 调式模式, 开启后会忽略array的值, 返回原始字符串
+ * @param {boolean} options.debug - 调式模式
  * @param {boolean} options.array - 返回数组
  * @api public
  */
@@ -16,7 +16,7 @@ function PullWord(options) {
     this.defaultSettings = {
         url: 'http://api.pullword.com/post.php', /* api url */
         threshold: 0.5, /* 阀值 */
-        debug: 0, /* 调式模式, 忽略array的值, 返回原始字符串 */
+        debug: 0, /* 调式模式 */
         array: 1 /* 返回数组 */
     };
 
@@ -56,7 +56,7 @@ PullWord.prototype.splitText = function (source, options, callback) {
     }
 
     if (!source) {
-        source = settings.debug || !settings.array? '' : [];
+        source = settings.debug || !settings.array ? '' : [];
         return callback(null, source);
     }
 
@@ -65,7 +65,7 @@ PullWord.prototype.splitText = function (source, options, callback) {
         form: {
             source: source,
             param1: settings.threshold,
-            param2: settings.debug? 1: 0 // support true/false
+            param2: settings.debug ? 1 : 0 // support true/false
         }
     };
 
@@ -82,14 +82,20 @@ PullWord.prototype.splitText = function (source, options, callback) {
  */
 PullWord.prototype.wrap = function (settings, callback) {
     return function (err, response, result) {
-        if (!err && response.statusCode == 200) {
+        if (err) return callback(err);
 
-            result = trim(result);
+        result = trim(result);
 
-            if ((!settings.debug) && settings.array) {
-                result = result.split('\r\n');
+        if (settings.array) {
+            result = result.split('\r\n');
+
+            if (settings.debug) {
+                result = result.map(function (v) {
+                    v = v.split(':');
+                    v[1] = Number(v[1]);
+                    return v;
+                });
             }
-
         }
 
         callback(err, result);
@@ -100,3 +106,4 @@ PullWord.prototype.wrap = function (settings, callback) {
  * Expose `PullWord`
  */
 module.exports = PullWord;
+
