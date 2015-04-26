@@ -48,7 +48,7 @@ describe('api', function () {
     var defaultOptions = {
         url: 'http://api.pullword.com/post.php', /* api url */
         threshold: 0.5, /* 阀值 */
-        debug: 0, /* 调式模式, 忽略array的值, 返回原始字符串 */
+        debug: 0, /* 调式模式 */
         array: 1 /* 返回数组 */
     };
 
@@ -80,7 +80,7 @@ describe('api', function () {
     });
 
     describe('#custom', function () {
-        it('should return array', function (done) {
+        it('array enabled should return array', function (done) {
             var api = new API({
                 debug: 0,
                 array: 1
@@ -91,7 +91,7 @@ describe('api', function () {
             });
         });
 
-        it('should return string', function (done) {
+        it('array disabled should return string', function (done) {
             var api = new API({
                 debug: 0,
                 array: 0
@@ -102,13 +102,13 @@ describe('api', function () {
             });
         });
 
-        it('should ignore array value and return string', function (done) {
+        it('debug enabled should return number', function (done) {
             var api = new API({
                 debug: 1,
                 array: 1
             });
             api.splitText('Hello', function (err, res) {
-                should(res).be.instanceof(String);
+                should(res[0][1]).be.instanceof(Number);
                 done();
             })
         });
