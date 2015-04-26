@@ -5,8 +5,8 @@ var extend = require('util')._extend;
 /**
  * PullWord constructor
  *
- * @param {object}  options
- * @param {string}  options.url - pullword.com api url
+ * @param {object}  options - 默认配置项
+ * @param {string}  options.url - pullword.com 接口地址
  * @param {number}  options.threshold - 阀值(0-1)
  * @param {boolean} options.debug - 调式模式, 开启后会忽略array的值, 返回原始字符串
  * @param {boolean} options.array - 返回数组
@@ -37,6 +37,7 @@ PullWord.prototype.init = function (options) {
  * Send api request to split text
  *
  * @param {string} source
+ * @param {object} [options] - custom settings
  * @param {function} callback
  * @api public
  */
@@ -68,8 +69,19 @@ PullWord.prototype.splitText = function (source, options, callback) {
         }
     };
 
-    request.post(params, function (err, response, result) {
+    request.post(params, self.wrap(settings, callback));
+};
 
+/**
+ * wrap the request callback function
+ *
+ * @param {object} settings - custom settings
+ * @param {function} callback
+ * @returns {function}
+ * @api private
+ */
+PullWord.prototype.wrap = function (settings, callback) {
+    return function (err, response, result) {
         if (!err && response.statusCode == 200) {
 
             result = trim(result);
@@ -81,7 +93,7 @@ PullWord.prototype.splitText = function (source, options, callback) {
         }
 
         callback(err, result);
-    });
+    }
 };
 
 /**
