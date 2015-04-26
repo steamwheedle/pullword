@@ -45,7 +45,10 @@ PullWordApi.prototype.splitText = function (source, callback) {
 
     var self = this;
 
-    if (!source) return  self.settings.debug || !self.settings.array? '' : [];
+    if (!source) {
+        source = self.settings.debug || !self.settings.array? '' : [];
+        return callback(null, source);
+    }
 
     var options = {
         url: self.settings.url,
