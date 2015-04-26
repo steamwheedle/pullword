@@ -13,7 +13,7 @@ var extend = require('util')._extend;
  * @api public
  */
 function PullWord(options) {
-    this.settings = {
+    this.defaultSettings = {
         url: 'http://api.pullword.com/post.php', /* api url */
         threshold: 0.5, /* 阀值 */
         debug: 0, /* 调式模式, 忽略array的值, 返回原始字符串 */
@@ -24,13 +24,13 @@ function PullWord(options) {
 };
 
 /**
- * Init Settings
+ * Init Default Settings
  *
  * @param options
  * @api private
  */
 PullWord.prototype.init = function (options) {
-    extend(this.settings, options);
+    extend(this.defaultSettings, options);
 };
 
 /**
@@ -48,7 +48,7 @@ PullWord.prototype.splitText = function (source, options, callback) {
         callback = options;
     }
 
-    var settings = extend({}, self.settings);
+    var settings = extend({}, self.defaultSettings);
 
     if (typeof options === 'object') {
         extend(settings, options);
@@ -59,7 +59,7 @@ PullWord.prototype.splitText = function (source, options, callback) {
         return callback(null, source);
     }
 
-    var opts = {
+    var params = {
         url: settings.url,
         form: {
             source: source,
@@ -68,7 +68,7 @@ PullWord.prototype.splitText = function (source, options, callback) {
         }
     };
 
-    request.post(opts, function (err, response, result) {
+    request.post(params, function (err, response, result) {
 
         if (!err && response.statusCode == 200) {
 
