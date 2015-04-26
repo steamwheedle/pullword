@@ -2,7 +2,7 @@ var request = require('request');
 var trim = require('./lib/trim');
 
 /**
- * PullWord Api constructor
+ * PullWord constructor
  *
  * @param {object}  options
  * @param {string}  options.url - pullword.com api url
@@ -11,7 +11,7 @@ var trim = require('./lib/trim');
  * @param {boolean} options.array - 返回数组
  * @api public
  */
-function PullWordApi(options) {
+function PullWord(options) {
     this.settings = {
         url: 'http://api.pullword.com/post.php', /* api url */
         threshold: 0.5, /* 阀值 */
@@ -28,7 +28,7 @@ function PullWordApi(options) {
  * @param options
  * @api private
  */
-PullWordApi.prototype.init = function (options) {
+PullWord.prototype.init = function (options) {
     for (var attr in options) {
         this.settings[attr] = options[attr];
     }
@@ -41,7 +41,7 @@ PullWordApi.prototype.init = function (options) {
  * @param {function} callback
  * @api public
  */
-PullWordApi.prototype.splitText = function (source, callback) {
+PullWord.prototype.splitText = function (source, callback) {
 
     var self = this;
 
@@ -76,6 +76,6 @@ PullWordApi.prototype.splitText = function (source, callback) {
 };
 
 /**
- * Expose `PullWordApi`
+ * Expose `PullWord`
  */
-module.exports = PullWordApi;
+module.exports = PullWord;
