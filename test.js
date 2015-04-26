@@ -62,10 +62,18 @@ describe('api', function () {
             })
         });
 
-        it('should return "hello"', function (done) {
+        it('should return ["hello"]', function (done) {
             var api = new API();
             api.splitText('Hello', function (err, res) {
                 should(res[0]).equal('hello');
+                done();
+            });
+        });
+
+        it('overload should return "hello"', function (done) {
+            var api = new API();
+            api.splitText('Hello', { array: 0}, function (err, res) {
+                should(res).equal('hello');
                 done();
             });
         });

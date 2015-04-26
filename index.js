@@ -40,31 +40,41 @@ PullWord.prototype.init = function (options) {
  * @param {function} callback
  * @api public
  */
-PullWord.prototype.splitText = function (source, callback) {
-
+PullWord.prototype.splitText = function (source, options, callback) {
     var self = this;
 
+    /* support overload */
+    if (typeof options === 'function') {
+        callback = options;
+    }
+
+    var settings = extend({}, self.settings);
+
+    if (typeof options === 'object') {
+        extend(settings, options);
+    }
+
     if (!source) {
-        source = self.settings.debug || !self.settings.array? '' : [];
+        source = settings.debug || !settings.array? '' : [];
         return callback(null, source);
     }
 
-    var options = {
-        url: self.settings.url,
+    var opts = {
+        url: settings.url,
         form: {
             source: source,
-            param1: self.settings.threshold,
-            param2: self.settings.debug? 1: 0 // support true/false
+            param1: settings.threshold,
+            param2: settings.debug? 1: 0 // support true/false
         }
     };
 
-    request.post(options, function (err, response, result) {
+    request.post(opts, function (err, response, result) {
 
         if (!err && response.statusCode == 200) {
 
             result = trim(result);
 
-            if ((!self.settings.debug) && self.settings.array) {
+            if ((!settings.debug) && settings.array) {
                 result = result.split('\r\n');
             }
 
