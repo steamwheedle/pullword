@@ -53,6 +53,15 @@ describe('api', function () {
     };
 
     describe('#default', function () {
+
+        it('should return empty', function (done) {
+            var api = new API({ array: 0});
+            api.splitText('', function (err, res) {
+                should(res).equal('');
+                done();
+            })
+        });
+
         it('should return "hello"', function (done) {
             var api = new API();
             api.splitText('Hello', function (err, res) {
