@@ -1,5 +1,6 @@
 var request = require('request');
 var trim = require('./lib/trim');
+var extend = require('util')._extend;
 
 /**
  * PullWord constructor
@@ -29,9 +30,7 @@ function PullWord(options) {
  * @api private
  */
 PullWord.prototype.init = function (options) {
-    for (var attr in options) {
-        this.settings[attr] = options[attr];
-    }
+    extend(this.settings, options);
 };
 
 /**
