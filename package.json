@@ -4,7 +4,7 @@
   "dependencies": {
     "request": "^2.55.0"
   },
-  "description": "中文在线分词, 调用pullword.com的api",
+  "description": "中文在线分词, A NodeJS package for pullword.com",
   "main": "index.js",
   "devDependencies": {
     "jslint": "^0.9.0-pre006",
