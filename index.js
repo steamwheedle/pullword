@@ -65,7 +65,7 @@ PullWord.prototype.pullword = function (source, options, callback) {
         form: {
             source: source,
             param1: settings.threshold,
-            param2: settings.debug ? 1 : 0 // support true/false
+            param2: settings.debug ? 1 : 0 // support true or false
         }
     };
 
@@ -106,4 +106,3 @@ PullWord.prototype.wrap = function (settings, callback) {
  * Expose `PullWord`
  */
 module.exports = PullWord;
-
