@@ -14,6 +14,10 @@
   "scripts": {
     "test": "mocha --timeout 150000 test.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/steamwheedle/pullword.git"
+  },
   "keywords": [
     "pullword",
     "中文",
