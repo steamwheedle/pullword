@@ -1,5 +1,5 @@
 var should = require('should');
-var API = require('./index.js');
+var API = require('./index.js').PullWord;
 var trim = require('./lib/trim.js');
 
 describe('lib', function() {

@@ -102,7 +102,15 @@ PullWord.prototype.wrap = function (settings, callback) {
     }
 };
 
+
 /**
- * Expose `PullWord`
+ * Export PullWord Instance
  */
-module.exports = PullWord;
+module.exports = function (options) {
+    return new PullWord(options);
+}
+
+/**
+ * Expose PullWord
+ */
+module.exports.PullWord = PullWord;

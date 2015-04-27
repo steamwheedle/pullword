@@ -19,7 +19,7 @@ var defaultOptions = {
 };
 
 
-var api = new require('pullword')(defaultOptions);
+var api = require('pullword')(defaultOptions);
 
 
 api.pullword('老板来碗牛肉面，不要香菜。', function (err, result) {
