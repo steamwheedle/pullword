@@ -34,14 +34,14 @@ PullWord.prototype.init = function (options) {
 };
 
 /**
- * Send api request to split text
+ * Send api request to pull word
  *
  * @param {string} source
  * @param {object} [options] - custom settings
  * @param {function} callback
  * @api public
  */
-PullWord.prototype.splitText = function (source, options, callback) {
+PullWord.prototype.pullword = function (source, options, callback) {
     var self = this;
 
     /* support overload */

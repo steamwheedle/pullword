@@ -56,7 +56,7 @@ describe('api', function () {
 
         it('should return empty', function (done) {
             var api = new API({ array: 0});
-            api.splitText('', function (err, res) {
+            api.pullword('', function (err, res) {
                 should(res).equal('');
                 done();
             })
@@ -64,7 +64,7 @@ describe('api', function () {
 
         it('should return ["hello"]', function (done) {
             var api = new API();
-            api.splitText('Hello', function (err, res) {
+            api.pullword('Hello', function (err, res) {
                 should(res[0]).equal('hello');
                 done();
             });
@@ -72,7 +72,7 @@ describe('api', function () {
 
         it('overload should return "hello"', function (done) {
             var api = new API();
-            api.splitText('Hello', { array: 0}, function (err, res) {
+            api.pullword('Hello', { array: 0}, function (err, res) {
                 should(res).equal('hello');
                 done();
             });
@@ -85,7 +85,7 @@ describe('api', function () {
                 debug: 0,
                 array: 1
             });
-            api.splitText('Hello', function (err, res) {
+            api.pullword('Hello', function (err, res) {
                 should(res).be.instanceof(Array).and.lengthOf(1);
                 done();
             });
@@ -96,7 +96,7 @@ describe('api', function () {
                 debug: 0,
                 array: 0
             });
-            api.splitText('Hello', function (err, res) {
+            api.pullword('Hello', function (err, res) {
                 should(res).be.instanceof(String);
                 done();
             });
@@ -107,7 +107,7 @@ describe('api', function () {
                 debug: 1,
                 array: 1
             });
-            api.splitText('Hello', function (err, res) {
+            api.pullword('Hello', function (err, res) {
                 should(res[0][1]).be.instanceof(Number);
                 done();
             })
